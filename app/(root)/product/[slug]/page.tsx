@@ -4,7 +4,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { getProductBySlug } from '@/lib/actions/product.actions';
 import { notFound } from 'next/navigation';
 import ProductPrice from '@/components/shared/product/product-price';
-import { Section } from 'lucide-react';
+import ProductImages from '@/components/shared/product/product-images';
+
+
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -16,10 +18,12 @@ const ProductDetailsPage = async (props: {
 
   return (
     <>
-      <Section>
+      <section>
         <div className="grid grid-cols-1 md:grid-cols-5">
           {/* Images Colum */}
-          <div className="col-span-2">{/* {images component} */}</div>
+          <div className="col-span-2">
+            <ProductImages images={product.images}/>
+          </div>
           {/* details clumn */}
           <div className="col-span-2 p05">
             <div className="flex flex-col gap-6">
@@ -58,13 +62,19 @@ const ProductDetailsPage = async (props: {
                     <Badge variant="outline">In Stock</Badge>
                   ) : (
                     <Badge variant="destructive">Out Of Stock</Badge>
-                  )};
+                  )}
+                  
                 </div>
+                {product.stock > 0 && (
+                  <div className="flex-center">
+                    <Button className="w-full">Add To Cart</Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
         </div>
-      </Section>
+      </section>
     </>
   );
 };
